@@ -4,6 +4,8 @@ import { View, Text, StyleSheet } from 'react-native';
 
 
 function Screen1() {
+    let text  = "ooga booga"; 
+    let table = [];
     useEffect(() => {
         fetch("/api/listSaved");
     //     fetch("/api/newDraft", {method: "POST", body: body, headers: {'Content-Type': "application/json"}})
@@ -25,5 +27,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f0f0',
     },
 });
+
+sendText = (text) => {
+    fetch("/api/saveTranslation", {method: "POST", body: text, headers: {'Content-Type': "application/json"}})
+}
+
+build
 
 export default Screen1;
