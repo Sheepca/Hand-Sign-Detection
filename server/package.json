@@ -1,0 +1,15 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "serverside",
+  "main": "routes.ts",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Hand-Sign-Detection"
+  },
+  "author": "Eric Han, Heon Jwa, Trien Vuong",
+  "license": "ISC"
+}
