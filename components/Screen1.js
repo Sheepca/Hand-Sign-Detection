@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, activeTab,fontLoaded,ActivityIndicator } from 'react-native';
 
 
 
@@ -15,25 +15,59 @@ function Screen1() {
             <View style={translate.textBoxContainer}>
                  <Text style={translate.textBox}>Translation: </Text>
             </View>
+            <View style = {styles.container}>
+            <View style={styles.container}>
+                <View style={dividers.tabs}>
+                    <TouchableOpacity
+                        style={[styles.tabButton, activeTab === 'Contacts' ? dividers.container : null]}
+                        onPress={() => navigation.navigate('Contacts')}
+                    >
+                        <Text style={styles.tabButtonText}>previous translations: </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.tabButton, activeTab === 'Dial' ? styles.activeTab : null]}
+                        onPress={() => navigation.navigate('Dial')} // Navigate to 'Dial' when 'Dial' tab is clicked
+                    >
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.contactsContainer}>
+                    {fontLoaded ? (
+                        <ScrollView>
+                            {activeTab === 'Contacts' ? (
+                                <View>
+                                    <Text style={[styles.groupTitle, { color: '#5267B3', textAlign: '' }]}>Contacts</Text>
+                                    {Object.keys(groupedContacts)
+                                        .sort()
+                                        .map((letter) => (
+                                            <View key={letter}>
+                                                <Text style={[styles.groupTitle, { color: '#5267B3', textAlign: 'left' }]}>{letter}</Text>
+                                                {groupedContacts[letter].map((contact) => renderContactItem(contact))}
+                                            </View>
+                                        ))}
+                                </View>
+                            ) : null}
+                        </ScrollView>
+                    ) : (
+                        <ActivityIndicator size="large" color="#9E896A" />
+                    )}
+                </View>
+            </View>
+            </View>
         </View>
-        // <View style={styles.container}>
-        //    <Text>{text}</Text>
-        //    <Text>{table}</Text>
-        // </View>
     );
 }
 
 const translate = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'lightgray', // Background color of the screen
+        backgroundColor: '#E6C8FF', // Background color of the screen
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         padding: 30,
       },
       textBoxContainer: {
         width: '100%', // Adjust the width as needed
-        backgroundColor: 'white', // Background color of the box
+        backgroundColor: '#ededed', // Background color of the box
         padding: 15,
         borderWidth: 1,
         borderColor: 'blue', // Border color
@@ -43,12 +77,23 @@ const translate = StyleSheet.create({
         fontSize: 16,
       },
 });
+
+const dividers = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#E6C8FF',
+        borderWdith: 1,
+        borderColor: 'blue',
+        borderRadius: 5,
+    }
+})
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f0f0f0',
+        marginTop: 20,
+        justifyContent: 'top',
+        alignItems: 'top',
+        // backgroundColor: '#f0f0f0',
     },
 });
 
