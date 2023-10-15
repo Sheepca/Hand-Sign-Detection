@@ -17,7 +17,16 @@ const Home = () => {
     const router = useRouter();
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Tab1" component={Screen1} />
+            <Tab.Screen name="Saved Translations" component={Screen1} 
+            options = {{
+                /*
+                print list of past translations, refer to 
+                render in editor.tsx
+                */
+                
+            }}
+            />
+            <Tab.Screen name="Tab2" component={CameraScreen} />
             <Tab.Screen name="Tab2" component={CameraScreen} />
         </Tab.Navigator>
     );
