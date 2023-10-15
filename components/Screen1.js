@@ -11,14 +11,38 @@ function Screen1() {
         buildTable();
       }, []);
     return (
-        
-        <View style={styles.container}>
-           <Text>{text}</Text>
-           <Text>{table}</Text>
+        <View style={translate.container}>
+            <View style={translate.textBoxContainer}>
+                 <Text style={translate.textBox}>Translation: </Text>
+            </View>
         </View>
+        // <View style={styles.container}>
+        //    <Text>{text}</Text>
+        //    <Text>{table}</Text>
+        // </View>
     );
 }
 
+const translate = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'lightgray', // Background color of the screen
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        padding: 30,
+      },
+      textBoxContainer: {
+        width: '100%', // Adjust the width as needed
+        backgroundColor: 'white', // Background color of the box
+        padding: 15,
+        borderWidth: 1,
+        borderColor: 'blue', // Border color
+        borderRadius: 5, // Border radius for rounded corners
+      },
+      textBox: {
+        fontSize: 16,
+      },
+});
 const styles = StyleSheet.create({
     container: {
         flex: 1,
