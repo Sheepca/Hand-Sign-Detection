@@ -46,10 +46,11 @@ export default function CameraScreen() {
   const captureImage = async () => {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
-      console.log('Photo:', photo);
+      console.log('Captured Photo URI:', photo.uri); // Add this line for debugging
       uploadImage(photo.uri);  // Upload the captured image
     }
   };
+  
 
   useEffect(() => {
     (async () => {

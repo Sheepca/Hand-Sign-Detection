@@ -1,119 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
-function Screen1({ navigation }) {
-  const [fontLoaded, setFontLoaded] = useState(true); // You should set the actual font loading state
-  const [activeTab, setActiveTab] = useState('Contacts'); // Define and set the active tab state
-  const [groupedContacts, setGroupedContacts] = useState({}); // Define the grouped contacts state
-
-  const text = "ooga booga";
-  const table = [];
-
-  useEffect(() => {
-    // Simulated data (you can replace this with actual data fetching)
-    const groupedContactsData = {
-      A: ['Alice', 'Amy'],
-      B: ['Bob'],
-    };
-
-    setGroupedContacts(groupedContactsData);
-    // Build table here if needed
-  }, []);
+function Screen1() {
 
   return (
-    <View style={translate.container}>
-      <View style={translate.textBoxContainer}>
-        <Text style={translate.textBox}>Translation: {text}</Text>
+    <View style={styles.container}>
+      <View style={styles.textBoxContainer}>
+        <Text style={styles.textBox}>Translation: </Text>
       </View>
 
-      <View style={styles.container}>
-        <View style={dividers.container}>
-          <Text
-            // style={[styles.tabButton, activeTab === 'Contacts' ? dividers.container : null]}
-            // onPress={() => setActiveTab('Contacts')}
-          >
-            <Text style={styles.prevBoxContainer}>previous translations: </Text>
-          </Text>
-          <Text
-
-            // onPress={() => navigation.navigate('Dial')}
-          >
-          </Text>
-        </View>
-        <View style={styles.contactsContainer}>
-            {/* <ActivityIndicator size="large" color="#9E896A" /> */}
-        </View> 
+      <View style={styles.prevBoxContainer}>
+        <Text style={styles.prevText}>Previous Translations:</Text>
       </View>
     </View>
   );
 }
 
-const translate = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E6C8FF',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     padding: 30,
   },
   textBoxContainer: {
     width: '100%',
-    backgroundColor: '#ededed',
+    backgroundColor: '#f7f7f7', // Lighter gray
     padding: 15,
     borderWidth: 1,
-    borderColor: 'blue',
-    borderRadius: 5,
+    borderColor: '#d1d1d1',  // Subtle border
+    borderRadius: 10, // Rounded corners
+    marginBottom: 10,
+    shadowColor: "#000", // Shadows for depth
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
   },
   textBox: {
     fontSize: 16,
   },
-});
-
-const dividers = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E6C8FF',
-    borderWidth: 1,
-    borderColor: 'blue',
-    borderRadius: 5,
-  },
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-    justifyContent: 'top', // Should be 'flex-start'
-    alignItems: 'top', // Should be 'flex-start'
-  },
-  textBoxContainer: {
-    width: '100%',
-    backgroundColor: '#ededed',
-    padding: 15,
-    borderWidth: 1,
-    borderColor: 'blue',
-    borderRadius: 5,
-    fontSize: 16,
-  },
   prevBoxContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
-  },
-  tabButton: {
+    backgroundColor: '#f7f7f7', 
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#d1d1d1',
     padding: 10,
-    margin: 5,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
   },
-  contactsContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  groupTitle: {
-    color: '#5267B3',
-    textAlign: 'left',
+  prevText: {
+    fontSize: 16,
   },
 });
 
 export default Screen1;
+
