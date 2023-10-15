@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'; // Import createNativeStackNavigator
 import Screen1 from '../components/Screen1'; // Import your screen components
-import CameraScreen from '../components/camerascreen';
+import CameraScreen from '../components/CameraScreen';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator(); // Create a Stack Navigator

@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+
+
 function Screen1() {
+    useEffect(() => {
+        fetch("/api/listSaved");
+    //     fetch("/api/newDraft", {method: "POST", body: body, headers: {'Content-Type': "application/json"}})
+    // .then(this.newDraftRes)
+      }, []);
     return (
+        
         <View style={styles.container}>
-            <Text>Screen 1 Content</Text>
+           <Text>{text}</Text>
         </View>
     );
 }
