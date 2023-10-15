@@ -1,11 +1,28 @@
-from flask import request, jsonify, redirect, url_for, send_from_directory
+from flask import request, current_app as app
+from flask import jsonify
 from werkzeug.utils import secure_filename
 from app import app
-from app.models.ml_model import process_image  # This function will do the ML processing
+from .models.ml_model import process_image # This function will do the ML processing
 import os
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.route('/')
+def index():
+    return "Hello, World!"
+
+@app.route('/upload', methods=['POST'])
+def upload_image():
+    if 'file' in request.files:
+        file = request.files['file']
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filename)
+        return "File saved", 200
+    return "No file found", 400
 
 @app.route('/receive_image', methods=['POST'])
 def receive_image():
