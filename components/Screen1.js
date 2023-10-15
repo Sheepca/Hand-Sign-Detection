@@ -7,14 +7,14 @@ function Screen1() {
     let text  = "ooga booga"; 
     let table = [];
     useEffect(() => {
-        fetch("/api/listSaved");
-    //     fetch("/api/newDraft", {method: "POST", body: body, headers: {'Content-Type': "application/json"}})
-    // .then(this.newDraftRes)
+        sendText(text);
+        buildTable();
       }, []);
     return (
         
         <View style={styles.container}>
            <Text>{text}</Text>
+           <Text>{table}</Text>
         </View>
     );
 }
@@ -32,6 +32,19 @@ sendText = (text) => {
     fetch("/api/saveTranslation", {method: "POST", body: text, headers: {'Content-Type': "application/json"}})
 }
 
-build
+buildTable = () => {
+    fetch("/api/listSaved", {method: "POST", headers: {'Content-Type': "application/json"}})
+    .then(data => {
+        list = [];
+        for (item in data) {
+            list.push(
+                <View>
+                    <Text>{item}</Text>
+                </View>
+            )
+        }   
+        table = list;
+    });
+}
 
 export default Screen1;

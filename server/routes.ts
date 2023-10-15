@@ -21,6 +21,7 @@ type translation = {
 }
 
 const translationHistory: string[] = [];
+translationHistory.push("hello");
 export function listSaved(req: Request, res: Response) {
   if (translationHistory.length === 0) {
     res.status(400).send("No saved translations");
