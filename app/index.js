@@ -19,21 +19,21 @@ const Home = () => {
   );
 };
 
-const TabNavigator = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Translation"
-        component={Screen1}
-        options={{ headerTitle: 'Translation' }}
-      />
-      <Tab.Screen
-        name="Camera"
-        component={CameraScreen}
-        options={{ headerTitle: 'Camera' }}
-      />
-    </Tab.Navigator>
-  );
-};
+    const router = useRouter();
+    return (
+        <Tab.Navigator>
+            <Tab.Screen name="Saved Translations" component={Screen1} 
+            options = {{
+                /*
+                print list of past translations, refer to 
+                render in editor.tsx
+                */
+                
+            }}
+            />
+            <Tab.Screen name="Camera" component={CameraScreen} />
+        </Tab.Navigator>
+    );
+}
 
 export default Home;
