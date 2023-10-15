@@ -13,7 +13,7 @@ const Home = () => {
         name="HomeTabs"
         component={TabNavigator}
         options={{
-            headerTitle: 'Sign Language Translator',
+            headerTitle: 'Global Sign-Language Translator',
             headerStyle: {
                 backgroundColor: '#4B2E83',  // This sets the background color to light purple
             },
