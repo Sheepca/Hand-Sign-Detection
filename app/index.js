@@ -19,6 +19,7 @@ const Home = () => {
         <Tab.Navigator>
             <Tab.Screen name="Tab1" component={Screen1} />
             <Tab.Screen name="Tab2" component={CameraScreen} />
+            <Tab.Screen name="Tab2" component={CameraScreen} />
         </Tab.Navigator>
     );
 }
