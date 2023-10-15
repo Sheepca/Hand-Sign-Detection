@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 
-function CameraScreen() {
+export default function CameraScreen() {
   const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
   useEffect(() => {
     (async () => {
@@ -11,6 +12,14 @@ function CameraScreen() {
       setHasPermission(status === 'granted');
     })();
   }, []);
+
+  const flipCamera = () => {
+    setType(
+      type === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  };
 
   if (hasPermission === null) {
     return <View />;
@@ -21,19 +30,10 @@ function CameraScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Camera style={{ flex: 1 }} type={Camera.Constants.Type.back}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity
-            style={{
-              flex: 0.1,
-              alignSelf: 'flex-end',
-              alignItems: 'center',
-            }}>
+      <Camera style={{ flex: 1 }} type={type}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={flipCamera}>
+            <Text style={styles.buttonText}>Flip Camera</Text>
           </TouchableOpacity>
         </View>
       </Camera>
@@ -41,4 +41,27 @@ function CameraScreen() {
   );
 }
 
-export default CameraScreen;
+
+const styles = StyleSheet.create({
+    buttonContainer: {
+      flex: 1,
+      backgroundColor: 'transparent',
+      flexDirection: 'row',
+      justifyContent: 'flex-end', // Align the button to the bottom right
+      alignItems: 'flex-end',
+      paddingBottom: 40,
+      paddingRight: 30
+      
+    },
+    button: {
+      width: 100, // Set the width
+      height: 40, // Set the height
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+      borderRadius: 20, // Round shape
+    },
+    buttonText: {
+      color: 'white',
+    },
+  });

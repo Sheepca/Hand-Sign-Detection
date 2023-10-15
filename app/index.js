@@ -8,8 +8,7 @@ import { View } from 'react-native-web';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import Screen1 from '../components/Screen1'; // Import your screen components
-import Screen2 from '../components/Screen2';
-import CameraScreen from '../components/CameraScreen'
+import CameraScreen from '../components/camerascreen'
 
 const Tab = createMaterialTopTabNavigator();
 
