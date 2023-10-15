@@ -1,14 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
+import axios from 'axios';
 
 export default function CameraScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const cameraRef = useRef(null);
+
+  const uploadImage = async (imageUri) => {
+    let formData = new FormData();
+
+    // Split the URI to get the file name
+    let uriParts = imageUri.split('/');
+    let fileName = uriParts[uriParts.length - 1];
+
+    // Append the image file to the FormData
+    formData.append('photo', {
+      uri: imageUri,
+      name: fileName,
+      type: 'image/jpg',
+    });
+
+    try {
+      // Send the image to your Flask backend
+      let response = await axios.post('http://10.19.216.237:5000/upload', formData);
+      console.log('Image Uploaded', response.data);
+    } catch (error) {
+      if (error.response) {
+          // The request was made and the server responded with a status code
+          console.error('Data:', error.response.data);
+          console.error('Status:', error.response.status);
+          console.error('Headers:', error.response.headers);
+      } else if (error.request) {
+          // The request was made but no response was received
+          console.error('Request:', error.request);
+      } else {
+          // Something happened in setting up the request that triggered an Error
+          console.error('Error:', error.message);
+      }
+      console.error(error.config);
+  };
+}
+
+  const captureImage = async () => {
+    if (cameraRef.current) {
+      const photo = await cameraRef.current.takePictureAsync();
+      console.log('Photo:', photo);
+      uploadImage(photo.uri);  // Upload the captured image
+    }
+  };
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -30,9 +75,14 @@ export default function CameraScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Camera style={{ flex: 1 }} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={flipCamera}>
+      <Camera style={{ flex: 1 }} type={type} ref={cameraRef}>
+        <View style={styles.captureContainer}>
+          <TouchableOpacity style={styles.captureButton} onPress={captureImage}>
+            <Text style={styles.buttonText}>Capture</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.flipContainer}>
+          <TouchableOpacity style={styles.flipButton} onPress={flipCamera}>
             <Text style={styles.buttonText}>Flip Camera</Text>
           </TouchableOpacity>
         </View>
@@ -43,25 +93,37 @@ export default function CameraScreen() {
 
 
 const styles = StyleSheet.create({
-    buttonContainer: {
+    captureContainer: {
       flex: 1,
       backgroundColor: 'transparent',
       flexDirection: 'row',
-      justifyContent: 'flex-end', // Align the button to the bottom right
+      justifyContent: 'center',
       alignItems: 'flex-end',
-      paddingBottom: 40,
-      paddingRight: 30
-      
+      paddingBottom: 30
     },
-    button: {
-      width: 100, // Set the width
-      height: 40, // Set the height
+    captureButton: {
+      width: 70, 
+      height: 70, 
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-      borderRadius: 20, // Round shape
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+      borderRadius: 35, // Half of width/height to make it round
+    },
+    flipContainer: {
+      position: 'absolute',
+      bottom: 30,
+      right: 30,
+      backgroundColor: 'transparent',
+    },
+    flipButton: {
+      width: 100,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      borderRadius: 20,
     },
     buttonText: {
       color: 'white',
     },
-  });
+});
