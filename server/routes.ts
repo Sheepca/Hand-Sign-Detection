@@ -21,6 +21,7 @@ type translation = {
 }
 
 const translationHistory: string[] = [];
+translationHistory.push("hello");
 export function listSaved(req: Request, res: Response) {
   if (translationHistory.length === 0) {
     res.status(400).send("No saved translations");
@@ -29,5 +30,10 @@ export function listSaved(req: Request, res: Response) {
   res.json(translationHistory);
 }
 export function saveTranslation(req: Request, res: Response) {
-  if 
+  const translation = req.body.text;
+  if (translation === undefined) {
+    res.status(400).send("Error sending translation to server");
+    return;
+  }
+  translationHistory.push(translation)
 }
