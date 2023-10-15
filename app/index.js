@@ -1,25 +1,39 @@
-import { useState } from 'react';
-import { ScrollView, SafeAreaView, Text } from 'react-native';
-import { Stack, useRouter, HomeScreen } from 'expo-router';
-
-import { COLORS, icons, images, SIZES } from '../constants';
-import { ScreenHeaderBtn, Welcome } from '../components';
-import { View } from 'react-native-web';
+import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
+import { createNativeStackNavigator } from '@react-navigation/native-stack'; // Import createNativeStackNavigator
 import Screen1 from '../components/Screen1'; // Import your screen components
-import CameraScreen from '../components/camerascreen'
+import CameraScreen from '../components/camerascreen';
 
 const Tab = createMaterialTopTabNavigator();
+const Stack = createNativeStackNavigator(); // Create a Stack Navigator
 
 const Home = () => {
-    const router = useRouter();
-    return (
-        <Tab.Navigator>
-            <Tab.Screen name="Tab1" component={Screen1} />
-            <Tab.Screen name="Tab2" component={CameraScreen} />
-        </Tab.Navigator>
-    );
-}
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="HomeTabs"
+        component={TabNavigator}
+        options={{ headerTitle: 'Sign Language Translator' }} // Specify the header title
+      />
+    </Stack.Navigator>
+  );
+};
+
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Translation"
+        component={Screen1}
+        options={{ headerTitle: 'Translation' }}
+      />
+      <Tab.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={{ headerTitle: 'Camera' }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default Home;
